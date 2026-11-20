@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en-ZA">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mbombela Power &amp; Weather</title>
+<meta name="description" content="Load shedding schedule, weather and Ligwalagwala FM for Mbombela (Nelspruit), Mpumalanga.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="max-w-5xl mx-auto px-4 py-6 sm:py-10">
+
+  <header class="mb-6 flex flex-wrap items-end justify-between gap-3">
+    <div>
+      <h1 class="text-3xl sm:text-4xl font-extrabold">Mbombela power &amp; weather</h1>
+      <p class="muted mt-1">Load shedding times, the weather during them, and Ligwalagwala FM. Mbombela (Nelspruit), Mpumalanga.</p>
+    </div>
+    <p id="clock" class="muted text-sm"></p>
+  </header>
+
+  <div id="banner" class="hidden card p-3 mb-4 text-sm" role="status"></div>
+
+  <main class="grid lg:grid-cols-3 gap-4">
+
+    <div class="lg:col-span-1 space-y-4">
+      <section class="card p-4" aria-label="Your area">
+        <h2 class="text-lg font-bold mb-1">Your area</h2>
+        <p id="savedArea" class="text-sm mb-3 muted">No area saved yet.</p>
+        <label for="q" class="text-sm font-medium">Search suburb or town</label>
+        <form id="searchForm" class="flex gap-2 mt-1">
+          <input id="q" type="search" placeholder="e.g. West Acres" autocomplete="off" maxlength="60">
+          <button class="btn" type="submit">Search</button>
+        </form>
+        <div class="flex flex-wrap gap-2 mt-3" id="chips" aria-label="Popular Mbombela areas"></div>
+        <ul id="results" class="mt-3 space-y-2"></ul>
+        <button id="clearArea" class="btn-ghost mt-3 text-sm hidden" type="button">Remove saved area</button>
+      </section>
+
+      <section class="card p-4" aria-label="Ligwalagwala FM live radio">
+        <h2 class="text-lg font-bold">Ligwalagwala FM</h2>
+        <p class="text-sm muted">92.5 FM in Mbombela · siSwati · SABC</p>
+        <div class="flex items-center gap-3 mt-3">
+          <button id="radioBtn" class="btn w-24" type="button" aria-pressed="false">Play</button>
+          <p id="radioStatus" class="text-sm" role="status"></p>
+        </div>
+        <label for="radioVol" class="text-sm font-medium mt-3 block">Volume</label>
+        <input id="radioVol" type="range" min="0" max="1" step="0.05" value="0.8">
+        <p class="text-sm muted mt-3">Trouble playing? Listen on <a id="sabcLink" class="underline" target="_blank" rel="noopener">SABC Plus</a> or the <a id="stationLink" class="underline" target="_blank" rel="noopener">station website</a>.</p>
+        <details class="mt-3">
+          <summary class="cursor-pointer text-sm font-semibold">Stream address</summary>
+          <label for="radioUrl" class="text-sm font-medium mt-2 block">Address (https)</label>
+          <input id="radioUrl" type="url" spellcheck="false">
+          <div class="flex gap-2 mt-2">
+            <button id="radioSave" class="btn text-sm" type="button">Save</button>
+            <button id="radioReset" class="btn-ghost text-sm" type="button">Use default</button>
+          </div>
+          <p id="radioMsg" class="text-sm mt-2" role="status"></p>
+        </details>
+      </section>
+
+      <details class="card p-4">
+        <summary class="cursor-pointer font-semibold">EskomSePush access token</summary>
+        <p class="text-sm muted mt-2">Live schedules need a free token from EskomSePush. It stays in this browser only. Without one you'll see sample times.</p>
+        <label for="token" class="text-sm font-medium mt-3 block">Token</label>
+        <input id="token" type="password" autocomplete="off" spellcheck="false" placeholder="Paste your token">
+        <div class="flex gap-2 mt-2">
+          <button id="saveToken" class="btn text-sm" type="button">Save token</button>
+          <button id="removeToken" class="btn-ghost text-sm" type="button">Remove</button>
+        </div>
+        <p id="tokenMsg" class="text-sm mt-2" role="status"></p>
+      </details>
+    </div>
+
+    <div class="lg:col-span-2 space-y-4">
+      <section class="card p-5" aria-label="Current load shedding stage">
+        <div class="flex items-baseline justify-between flex-wrap gap-2">
+          <h2 class="text-lg font-bold">National stage</h2>
+          <span id="stageMeta" class="text-sm muted"></span>
+        </div>
+        <p id="stageText" class="display text-4xl sm:text-5xl font-extrabold mt-2">…</p>
+        <div id="meter" class="flex gap-1.5 mt-4" role="img" aria-label="Load shedding stage meter"></div>
+        <div class="flex justify-between text-xs muted mt-1"><span>Stage 1</span><span>Stage 8</span></div>
+        <p id="nextStages" class="text-sm muted mt-3"></p>
+      </section>
+
+      <section class="card" aria-label="Schedule">
+        <div class="p-4 flex flex-wrap items-end justify-between gap-3">
+          <div>
+            <h2 class="text-lg font-bold">Your schedule</h2>
+            <p id="schedSub" class="text-sm muted">Pick an area to see outage times.</p>
+          </div>
+          <div class="w-44">
+            <label for="stageSel" class="text-sm font-medium">Show schedule for</label>
+            <select id="stageSel"></select>
+          </div>
+        </div>
+        <div id="schedule" class="divider"></div>
+      </section>
+
+      <section class="card p-4" aria-label="Weather">
+        <div class="flex items-baseline justify-between flex-wrap gap-2">
+          <h2 class="text-lg font-bold">Weather in Mbombela</h2>
+          <span class="text-sm muted">Open-Meteo</span>
+        </div>
+        <div id="now" class="mt-2 flex items-center gap-4"></div>
+        <h3 class="font-semibold mt-4 mb-2 text-sm">Next 24 hours</h3>
+        <div id="hourly" class="scroll-x"></div>
+        <h3 class="font-semibold mt-4 mb-2 text-sm">This week</h3>
+        <div id="daily" class="scroll-x"></div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="mt-8 text-sm muted">
+    Load shedding data: <a class="underline" href="https://esp.info/" target="_blank" rel="noopener">EskomSePush</a> ·
+    Weather: <a class="underline" href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo</a> ·
+    Radio: Ligwalagwala FM, © SABC. Times are South African Standard Time. Check with your municipality for final schedules.
+  </footer>
+</div>
+<script type="module" src="app.js"></script>
+</body>
+</html>

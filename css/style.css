@@ -1,0 +1,32 @@
+:root{
+  --bg:#f2f5ef; --card:#ffffff; --ink:#14271b; --muted:#5d6f63; --line:#dbe3d8;
+  --brand:#1f4d33; --on-brand:#ffffff; --sun:#f0a81f; --alert:#c8372d; --river:#2c6f8e; --ok:#1f7a45; --off:#e4eae1;
+}
+@media (prefers-color-scheme: dark){
+  :root{ --bg:#0f1a13; --card:#172419; --ink:#eaf1e6; --muted:#9bb0a0; --line:#274030; --brand:#7fc59a; --on-brand:#0f1a13; --river:#7ab8d4; --ok:#7fc59a; --alert:#ff7a6e; --off:#223428; }
+}
+html,body{background:var(--bg);color:var(--ink);font-family:'Figtree',system-ui,sans-serif}
+h1,h2,h3,.display{font-family:'Bricolage Grotesque','Figtree',sans-serif;letter-spacing:-.01em}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px}
+.muted{color:var(--muted)} .err{color:var(--alert)} .ok{color:var(--ok)} .rain{color:var(--river)}
+.day-name{color:var(--brand)} .note{border-top:1px solid var(--line)}
+.btn{background:var(--brand);color:var(--on-brand);border-radius:10px;padding:.6rem 1rem;font-weight:600}
+.btn:hover{filter:brightness(1.1)}
+.btn-ghost{border:1px solid var(--line);border-radius:10px;padding:.5rem .85rem;font-weight:500;background:transparent;color:var(--ink)}
+.btn-ghost:hover{background:var(--off)}
+input,select{background:var(--bg);color:var(--ink);border:1px solid var(--line);border-radius:10px;padding:.6rem .8rem;width:100%}
+input[type=range]{padding:0;accent-color:var(--brand)}
+:focus-visible{outline:3px solid var(--sun);outline-offset:2px}
+.seg{height:34px;border-radius:6px;background:var(--off);flex:1;transition:background .3s}
+.chip{border:1px solid var(--line);border-radius:999px;padding:.3rem .75rem;font-size:.85rem;background:var(--card)}
+.chip:hover{border-color:var(--brand)}
+.slot{display:grid;grid-template-columns:1fr auto;gap:.5rem;align-items:center;padding:.8rem 1rem;border-top:1px solid var(--line)}
+.slot:first-child{border-top:0}
+.scroll-x{display:flex;gap:.5rem;overflow-x:auto;padding-bottom:.4rem}
+.hour{min-width:64px;text-align:center;padding:.5rem .25rem;border-radius:10px;background:var(--bg);border:1px solid var(--line)}
+.hour.wide{min-width:92px}
+.divider{border-top:1px solid var(--line)}
+.onair{display:inline-block;width:.6rem;height:.6rem;border-radius:50%;background:var(--off);margin-right:.4rem}
+#radioStatus.live{color:var(--ok);font-weight:600}
+#radioStatus.live::before{content:"";display:inline-block;width:.6rem;height:.6rem;border-radius:50%;background:var(--alert);margin-right:.5rem}
+@media (prefers-reduced-motion: reduce){*{transition:none!important}}
