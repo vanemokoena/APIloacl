@@ -2,7 +2,7 @@
 
 A dashboard for residents of Mbombela (Nelspruit), Mpumalanga. It shows the current national load shedding stage, your area's outage times, and the weather forecast for each outage slot.
 
-**Live demo:** https://vanemokoena.github.io/mbombela-power-weather/
+**Live demo:** https://apilocalmbombela.vercel.app/
 
 ## Features
 - Search your suburb and save it (localStorage)
