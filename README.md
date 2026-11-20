@@ -4,6 +4,9 @@ A dashboard for residents of Mbombela (Nelspruit), Mpumalanga. It shows the curr
 
 **Live demo:** https://apilocalmbombela.vercel.app/
 
+<img width="1565" height="818" alt="Screenshot 2026-11-20 213451" src="https://github.com/user-attachments/assets/44787ede-9b6b-462a-ba59-16d8664726dc" />
+
+
 ## Features
 - Search your suburb and save it (localStorage)
 - Current stage with an 8-step meter, plus upcoming stage changes
